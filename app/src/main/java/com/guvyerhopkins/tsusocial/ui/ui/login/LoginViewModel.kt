@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import com.guvyerhopkins.tsusocial.R
 import com.guvyerhopkins.tsusocial.ui.data.LoginRepository
 import com.guvyerhopkins.tsusocial.ui.data.Result
-
-import com.guvyerhopkins.tsusocial.ui.R
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -40,6 +39,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     // A placeholder username validation check
+    //todo does not have to be a username. update check
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()

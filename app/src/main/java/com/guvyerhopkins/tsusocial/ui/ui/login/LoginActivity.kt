@@ -1,11 +1,9 @@
 package com.guvyerhopkins.tsusocial.ui.ui.login
 
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,8 +12,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-
-import com.guvyerhopkins.tsusocial.ui.R
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textview.MaterialTextView
+import com.guvyerhopkins.tsusocial.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
+        val forgotPassword = findViewById<MaterialTextView>(R.id.forgot_password)
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -93,6 +96,20 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
+            }
+        }
+
+        forgotPassword.setOnClickListener {
+            if (username.text.isNotEmpty()) {
+                val searchPrefix = "https://www.google.com/search?q="
+                val queryUrl: Uri = Uri.parse("$searchPrefix Forgot Password ${username.text}")
+                startActivity(Intent(Intent.ACTION_VIEW, queryUrl))
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.forgot_password_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
