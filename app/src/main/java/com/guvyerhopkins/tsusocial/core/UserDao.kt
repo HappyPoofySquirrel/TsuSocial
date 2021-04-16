@@ -12,5 +12,5 @@ interface UserDao {
     fun getUser(username: String): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun instert(username: String)
+    fun instert(user: User)
 }

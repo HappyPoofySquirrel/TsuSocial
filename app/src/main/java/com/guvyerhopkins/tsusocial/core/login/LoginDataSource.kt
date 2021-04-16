@@ -1,5 +1,6 @@
 package com.guvyerhopkins.tsusocial.core.login
 
+import com.guvyerhopkins.tsusocial.core.User
 import com.guvyerhopkins.tsusocial.core.UserDao
 
 /**
@@ -9,7 +10,7 @@ class LoginDataSource(private val userDao: UserDao) {
 
     fun login(username: String, password: String) {
         if (userDao.getUser(username) == null) {
-            userDao.instert(username)
+            userDao.instert(User(username = username, imageUrl = null))
         }
     }
 }
