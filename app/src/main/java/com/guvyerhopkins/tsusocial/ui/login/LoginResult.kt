@@ -1,4 +1,4 @@
-package com.guvyerhopkins.tsusocial.ui.ui.login
+package com.guvyerhopkins.tsusocial.ui.login
 
 /**
  * Authentication result : success (user details) or error message.

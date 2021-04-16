@@ -1,4 +1,4 @@
-package com.guvyerhopkins.tsusocial.data
+package com.guvyerhopkins.tsusocial.core
 
 import android.content.Context
 import androidx.room.Database
@@ -22,7 +22,11 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "TsuSocialUserDatabase")
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "TsuSocialUserDatabase"
+            )
                 .allowMainThreadQueries().build()
         }
     }

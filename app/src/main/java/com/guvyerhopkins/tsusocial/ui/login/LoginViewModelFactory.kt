@@ -1,22 +1,23 @@
-package com.guvyerhopkins.tsusocial.ui.ui.login
+package com.guvyerhopkins.tsusocial.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.guvyerhopkins.tsusocial.ui.data.LoginDataSource
-import com.guvyerhopkins.tsusocial.ui.data.LoginRepository
+import com.guvyerhopkins.tsusocial.core.UserDao
+import com.guvyerhopkins.tsusocial.core.login.LoginDataSource
+import com.guvyerhopkins.tsusocial.core.login.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-class LoginViewModelFactory : ViewModelProvider.Factory {
+class LoginViewModelFactory(private val userDao: UserDao) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
                 loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
+                    dataSource = LoginDataSource(userDao)
                 )
             ) as T
         }

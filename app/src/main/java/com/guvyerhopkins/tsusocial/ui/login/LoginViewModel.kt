@@ -1,12 +1,11 @@
-package com.guvyerhopkins.tsusocial.ui.ui.login
+package com.guvyerhopkins.tsusocial.ui.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import com.guvyerhopkins.tsusocial.R
-import com.guvyerhopkins.tsusocial.ui.data.LoginRepository
-import com.guvyerhopkins.tsusocial.ui.data.Result
+import com.guvyerhopkins.tsusocial.core.login.LoginRepository
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -17,15 +16,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
         val result = loginRepository.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
+        _loginResult.value = result
     }
 
     fun loginDataChanged(username: String, password: String) {
@@ -38,8 +30,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    // A placeholder username validation check
-    //todo does not have to be a username. update check
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
@@ -48,7 +38,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }

@@ -1,4 +1,4 @@
-package com.guvyerhopkins.tsusocial.ui.ui.login
+package com.guvyerhopkins.tsusocial.ui.login
 
 /**
  * Data validation state of the login form.

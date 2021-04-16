@@ -1,4 +1,4 @@
-package com.guvyerhopkins.tsusocial.data
+package com.guvyerhopkins.tsusocial.core
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,9 +8,9 @@ import androidx.room.Query
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getUser(userName: String): User
+    @Query("SELECT * FROM users WHERE username = :username")
+    fun getUser(username: String): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun instert(user: User)
+    fun instert(username: String)
 }

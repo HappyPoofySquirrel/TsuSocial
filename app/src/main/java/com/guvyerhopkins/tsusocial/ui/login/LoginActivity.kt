@@ -1,6 +1,5 @@
-package com.guvyerhopkins.tsusocial.ui.ui.login
+package com.guvyerhopkins.tsusocial.ui.login
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textview.MaterialTextView
 import com.guvyerhopkins.tsusocial.R
+import com.guvyerhopkins.tsusocial.core.AppDatabase
+import com.guvyerhopkins.tsusocial.ui.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,8 +35,9 @@ class LoginActivity : AppCompatActivity() {
         val loading = findViewById<ProgressBar>(R.id.loading)
         val forgotPassword = findViewById<MaterialTextView>(R.id.forgot_password)
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProvider(this, LoginViewModelFactory(AppDatabase.getInstance(this).userDao()))
+                .get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -59,12 +61,11 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
+                val intent = MainActivity.getIntent(this, loginResult.success.displayName)
+                startActivity(intent)
+                finish()
 
-            //Complete and destroy login activity once successful
-            finish()
+            }
         })
 
         username.afterTextChanged {
@@ -114,25 +115,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {
