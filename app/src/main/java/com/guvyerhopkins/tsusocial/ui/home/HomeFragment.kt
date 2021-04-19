@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.guvyerhopkins.tsusocial.R
-import com.guvyerhopkins.tsusocial.ui.MainActivity.Companion.USERNAME_KEY
 
 class HomeFragment : Fragment() {
 
@@ -24,7 +23,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(
                 this, HomeViewModelFactory(
-                    arguments?.getString(USERNAME_KEY)!!
+                    HomeFragmentArgs.fromBundle(requireArguments()).userName
                 )
             ).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
