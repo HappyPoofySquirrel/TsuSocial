@@ -3,8 +3,8 @@ package com.guvyerhopkins.tsusocial.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         const val USERNAME_KEY = "USERNAME_KEY"
         fun getIntent(context: Context, userName: String): Intent {
             return Intent(context, MainActivity::class.java).apply {
-                putExtra(USERNAME_KEY, userName)
+                bundleOf(USERNAME_KEY to userName)
             }
         }
     }
@@ -37,18 +37,11 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navController.setGraph(R.navigation.mobile_navigation, intent.extras)
         navView.setupWithNavController(navController)
 
-        showWelcomeMessage(intent.getStringExtra(USERNAME_KEY)!!)
+//        showWelcomeMessage(intent.getStringExtra(USERNAME_KEY)!!)
     }
 
-    private fun showWelcomeMessage(userName: String) {
-        val welcome = getString(R.string.welcome)
 
-        Toast.makeText(
-            applicationContext,
-            "$welcome $userName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
 }
