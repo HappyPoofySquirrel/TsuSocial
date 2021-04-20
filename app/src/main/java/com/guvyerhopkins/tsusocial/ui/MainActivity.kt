@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -15,11 +14,8 @@ import com.guvyerhopkins.tsusocial.R
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        const val USERNAME_KEY = "USERNAME_KEY"
-        fun getIntent(context: Context, userName: String): Intent {
-            return Intent(context, MainActivity::class.java).apply {
-                bundleOf(USERNAME_KEY to userName)
-            }
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 
@@ -37,11 +33,8 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navController.setGraph(R.navigation.mobile_navigation, intent.extras)
         navView.setupWithNavController(navController)
 
-//        showWelcomeMessage(intent.getStringExtra(USERNAME_KEY)!!)
+        navController.navigatorProvider
     }
-
-
 }

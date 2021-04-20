@@ -1,17 +1,22 @@
 package com.guvyerhopkins.tsusocial.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.guvyerhopkins.tsusocial.R
+import com.guvyerhopkins.tsusocial.core.LoggedInUserDao
+import java.util.*
 
-class HomeViewModel(private val userName: String) : ViewModel() {
+class HomeViewModel(private val loggedInUserDao: LoggedInUserDao) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    fun getGreeting(): Pair<Int, String> {
+        val calendar = Calendar.getInstance()
 
-    fun getGreeting(): String {
-        return userName
+        val stringResoure = when (calendar.get(Calendar.HOUR_OF_DAY)) {
+            in 0..11 -> R.string.good_morning
+            in 12..17 -> R.string.good_afternoon
+            in 18..24 -> R.string.good_evening
+            else -> R.string.whoops
+        }
+
+        return Pair(stringResoure, loggedInUserDao.getLoggedInUser().username)
     }
 }

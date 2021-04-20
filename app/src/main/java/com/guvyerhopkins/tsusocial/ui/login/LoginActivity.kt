@@ -35,8 +35,12 @@ class LoginActivity : AppCompatActivity() {
         val loading = findViewById<ProgressBar>(R.id.loading)
         val forgotPassword = findViewById<MaterialTextView>(R.id.forgot_password)
 
+        val database = AppDatabase.getInstance(this)
         loginViewModel =
-            ViewModelProvider(this, LoginViewModelFactory(AppDatabase.getInstance(this).userDao()))
+            ViewModelProvider(
+                this,
+                LoginViewModelFactory(database.userDao(), database.loggedInUserDao())
+            )
                 .get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
@@ -61,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                val intent = MainActivity.getIntent(this, loginResult.success.displayName)
+                val intent = MainActivity.getIntent(this)
                 startActivity(intent)
                 finish()
 

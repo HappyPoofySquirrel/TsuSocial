@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.guvyerhopkins.tsusocial.R
+import com.guvyerhopkins.tsusocial.core.AppDatabase
 
 class HomeFragment : Fragment() {
 
@@ -23,7 +24,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(
                 this, HomeViewModelFactory(
-                    HomeFragmentArgs.fromBundle(requireArguments()).userName
+                    AppDatabase.getInstance(requireContext()).loggedInUserDao()
                 )
             ).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
@@ -34,9 +35,8 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val welcome = getString(R.string.welcome)
-
-        textView.text = "$welcome ${homeViewModel.getGreeting()}"
+        textView.text =
+            getString(homeViewModel.getGreeting().first, homeViewModel.getGreeting().second)
     }
 }
 
