@@ -1,0 +1,54 @@
+{
+  "data": {
+    "users": [
+      {
+        "id": 1,
+        "username": "test_admin",
+        "profile_picture_url": "https://d3jibqhzv1fm2e.cloudfront.net/users/avatars/000/000/175/large?1611699211",
+        "verified_status": 1,
+        "url": "https://tsusocial.com",
+        "full_name": "Michael Chen"
+      },
+      {
+        "id": 2,
+        "username": "testusers",
+        "profile_picture_url": "https://d3jibqhzv1fm2e.cloudfront.net/users/avatars/000/000/361/large?1601409574",
+        "verified_status": 1,
+        "url": "https://tsusocial.com",
+        "full_name": "santaaaa"
+      },
+      {
+        "id": 3,
+        "username": "testuser_100",
+        "profile_picture_url": "https://d3jibqhzv1fm2e.cloudfront.net/users/avatars/000/000/983/large?1603990713",
+        "verified_status": 2,
+        "url": "https://tsusocial.com",
+        "full_name": "testuser fullname test"
+      },
+      {
+        "id": 4,
+        "username": "Piqatest",
+        "profile_picture_url": "/images/user.png",
+        "verified_status": 2,
+        "url": "https://tsusocial.com",
+        "full_name": "TestPiiiii QA"
+      },
+      {
+        "id": 5,
+        "username": "Testeralex1",
+        "profile_picture_url": "https://d3jibqhzv1fm2e.cloudfront.net/users/avatars/000/000/847/large?1616008431",
+        "verified_status": 1,
+        "url": "https://tsusocial.com",
+        "full_name": "Tester Qa"
+      },
+      {
+        "id": 6,
+        "username": "PiQA",
+        "profile_picture_url": "/images/user.png",
+        "verified_status": 1,
+        "url": "https://tsusocial.com",
+        "full_name": "Irina Test"
+      }
+    ]
+  }
+}
