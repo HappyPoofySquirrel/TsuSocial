@@ -1,25 +1,18 @@
 package com.guvyerhopkins.tsusocial.ui.search
 
-import MockUserResult
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.guvyerhopkins.tsusocial.core.JsonFileParser
+import com.guvyerhopkins.tsusocial.core.MockUser
 
-class SearchViewModel(private val jsonFileParser: JsonFileParser) : ViewModel() {
+class SearchViewModel(jsonFileParser: JsonFileParser) : ViewModel() {
 
-//    var mockUsers: LiveData<PagedList<MockUserResult>>
+    private val _mockUsers = MutableLiveData<List<MockUser>>()
+    val mockUsers: LiveData<List<MockUser>> = _mockUsers
 
     init {
-        val jsonString = jsonFileParser.getJsonDataFromAsset("mockData.json")
-
-//        val factory: DataSource.Factory<Int, MockUserResult> =
-        val gson = Gson()
-        val listPersonType = object : TypeToken<List<MockUserResult>>() {}.type
-
-        var persons: List<MockUserResult> = gson.fromJson(jsonString, listPersonType)
-//val list = pagedListOf
-//        val pagedListBuilder: LivePagedListBuilder<Int, MockUserResult> = LivePagedListBuilder<Int, MockUserResult>(factory, 10)
-//        mockUsers = pagedListBuilder.build()
+        _mockUsers.value =
+            jsonFileParser.getMockUsers() //move this class into a repository/data source pattern
     }
 }

@@ -1,3 +1,4 @@
+package com.guvyerhopkins.tsusocial.core
 import com.google.gson.annotations.SerializedName
 
 data class MockUserResult(
@@ -22,5 +23,13 @@ data class MockUser(
     @SerializedName("username")
     val username: String,
     @SerializedName("verified_status")
-    val verifiedStatus: Int
-)
+    private val verifiedStatus: Int
+) {
+    fun getVerifiedStatus(): String {
+        return if (verifiedStatus == 1) {
+            "Verified"
+        } else {
+            "Not Verified"
+        }
+    }
+}
