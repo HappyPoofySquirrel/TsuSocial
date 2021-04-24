@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.guvyerhopkins.tsusocial.R
 import com.guvyerhopkins.tsusocial.core.JsonFileParser
+import com.guvyerhopkins.tsusocial.ui.details.DetailsActivity
+
 
 class SearchFragment : Fragment() {
 
@@ -27,12 +31,30 @@ class SearchFragment : Fragment() {
                 SearchViewModelFactory(JsonFileParser(requireActivity().applicationContext))
             ).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
+        val recyclerView = root.findViewById<RecyclerView>(R.id.search_rv)
+        adapter = SearchAdapter(searchViewModel)
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         searchViewModel.mockUsers.observe(viewLifecycleOwner, Observer {
             val mockUsers = it ?: return@Observer
             adapter.setItems(mockUsers)
         })
 
-        adapter = SearchAdapter()
+        searchViewModel.selectedUser.observe(viewLifecycleOwner, Observer {
+            val selectedUser = it ?: return@Observer
+            requireContext().startActivity(
+                DetailsActivity.getIntent(
+                    requireContext(),
+                    selectedUser.profilePictureUrl,
+                    selectedUser.username
+                )
+            )
+        })
 
         return root
     }
