@@ -7,8 +7,7 @@ import java.util.*
 
 class HomeViewModel(private val loggedInUserDao: LoggedInUserDao) : ViewModel() {
 
-    fun getGreeting(): Pair<Int, String> {
-        val calendar = Calendar.getInstance()
+    fun getGreeting(calendar: Calendar): Pair<Int, String> {
 
         val stringResoure = when (calendar.get(Calendar.HOUR_OF_DAY)) {
             in 0..11 -> R.string.good_morning

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.guvyerhopkins.tsusocial.R
 import com.guvyerhopkins.tsusocial.core.AppDatabase
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -36,7 +37,10 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         textView.text =
-            getString(homeViewModel.getGreeting().first, homeViewModel.getGreeting().second)
+            getString(
+                homeViewModel.getGreeting(Calendar.getInstance()).first,
+                homeViewModel.getGreeting(Calendar.getInstance()).second
+            )
     }
 }
 
